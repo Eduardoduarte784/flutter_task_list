@@ -1,6 +1,6 @@
 # flutter_task_list
 
-A new Flutter project.
+Task List using Flutter
 
 ## Getting Started
 
