@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_task_list/components/task.dart';
+import 'package:flutter_task_list/data/task_inherited.dart';
+import 'package:flutter_task_list/screens/form_screen.dart';
 
 class InitialScreen extends StatefulWidget {
   const InitialScreen({super.key});
@@ -9,40 +11,29 @@ class InitialScreen extends StatefulWidget {
 }
 
 class _InitialScreenState extends State<InitialScreen> {
-  bool showTasks = true;
-
   @override
   Widget build(BuildContext context) {
-    const String pathToImages = 'assets/images/';
-
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
         title: const Text('Tarefas'),
       ),
-      body: AnimatedOpacity(
-        opacity: showTasks ? 1 : 0,
-        duration: const Duration(milliseconds: 800),
-        child: ListView(
-          children: const [
-            Task('Aprender Flutter', '${pathToImages}flutter.png', 3),
-            Task('Andar de Bike', '${pathToImages}bike.webp', 2),
-            Task('Meditar', '${pathToImages}meditar.jpeg', 5),
-            Task('Ler', '${pathToImages}ler.jpg', 4),
-            Task('Jogar', '${pathToImages}jogar.jpg', 1),
-            SizedBox(
-              height: 80,
-            )
-          ],
-        ),
+      body: ListView(
+        children: TaskInherited.of(context).taskList,
+        padding: EdgeInsets.only(top: 8, bottom: 70),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
-          setState(
-            () => showTasks = !showTasks,
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (contextNew) => FormScreen(
+                taskContext: context,
+              ),
+            ),
           )
         },
-        child: const Icon(Icons.remove_red_eye),
+        child: const Icon(Icons.add),
       ),
     );
   }

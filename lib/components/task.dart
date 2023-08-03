@@ -16,6 +16,14 @@ class _TaskState extends State<Task> {
   int level = 0;
   int masteryLevel = 0;
 
+  bool assetOrNetwork() {
+    if (widget.image.contains('http')) {
+      return false;
+    }
+
+    return true;
+  }
+
   Color getMasteryLevelColor() {
     switch (masteryLevel % 5) {
       case 0:
@@ -65,10 +73,15 @@ class _TaskState extends State<Task> {
                     height: 100,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(4),
-                      child: Image.asset(
-                        widget.image,
-                        fit: BoxFit.cover,
-                      ),
+                      child: assetOrNetwork()
+                          ? Image.asset(
+                              widget.image,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.network(
+                              widget.image,
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
                   Column(
